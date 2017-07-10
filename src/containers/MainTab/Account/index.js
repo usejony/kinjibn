@@ -11,6 +11,7 @@ import Header from '../../../components/Header'
 
 export default class Account extends Component {
     static navigationOptions = ({navigation}) => ({
+        headerTitle: '我的',
         tabBarLabel: '我的',
         tabBarIcon: ({tintColor, focused}) => (
             <Icons name={focused ? 'ios-person' : 'ios-person-outline'} color={tintColor} size={30}/>
@@ -19,7 +20,7 @@ export default class Account extends Component {
     render() {
         return (
             <View style={commonStyle.container}>
-                <Header title="我的" style={styles.header}/>
+                {/*<Header title="我的" style={styles.header}/>*/}
                 
             </View>
         );

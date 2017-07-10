@@ -11,6 +11,7 @@ import commonStyle from '../../../common/commonStyle';
 
 export default class Orders extends Component {
     static navigationOptions = ({navigation}) => ({
+        headerTitle: '订单',
         tabBarLabel: '订单',
         tabBarIcon: ({tintColor, focused}) => (
             <Icons name={focused ? 'ios-paper' : 'ios-paper-outline'} color={tintColor} size={28}/>
@@ -19,7 +20,7 @@ export default class Orders extends Component {
     render() {
         return (
             <View style={commonStyle.container}>
-                <Header title="订单" style={styles.header}/>
+                {/*<Header title="订单" style={styles.header}/>*/}
                 
             </View>
         );

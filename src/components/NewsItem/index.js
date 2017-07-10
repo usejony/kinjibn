@@ -33,18 +33,18 @@ const { width } = Dimensions.get('window');
 //     }
 // }
 
-export default newsItem = ( item ) => (
+export default newsItem = ({ item }) => (
     <TouchableHighlight underlayColor="#f0f0f0" onPress={() => null}>
-    <View style={styles.touch}>
-        <View style={styles.header}>
-            <Text style={styles.title}>{item.title}</Text>
-            <Image style={styles.img} source={{ url: item.img }} style={styles.thumbnail}/>
+        <View style={styles.touch}>
+            <View style={styles.header}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Image style={styles.img} source={{ url: item.img }} style={styles.thumbnail} />
+            </View>
+            <View style={styles.footer}>
+                <Text style={styles.footText}>来源：{item.source}</Text>
+                <Text style={styles.footText}>{item.date}</Text>
+            </View>
         </View>
-        <View style={styles.footer}>
-            <Text style={styles.footText}>来源：{item.source}</Text>
-            <Text style={styles.footText}>{item.date}</Text>
-        </View>
-    </View>
     </TouchableHighlight>
 )
 

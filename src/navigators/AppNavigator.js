@@ -13,7 +13,11 @@ export const AppNavigator = StackNavigator({
   }},
   LoginScreen: { screen: LoginNav },
 }, {
-    headerMode: 'none'
+    // headerMode: 'none'
+    navigationOptions: {
+        headerStyle: { backgroundColor: '#3fd47f'},
+        headerTitleStyle: { color: '#fff'}
+    }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (

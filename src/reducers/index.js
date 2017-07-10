@@ -24,10 +24,16 @@ function nav(state , action) {
       break;
     case TYPES.LOGINOUT:
       nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.navigate({ routeName: 'Login' }),
+        NavigationActions.navigate({ routeName: 'LoginScreen' }),
         state
       );
       break;
+    case TYPES.GO_NEWS_DETAIL:
+        nextState = AppNavigator.router.getStateForAction(
+            NavigationActions.navigate({ routeName: 'newsDetailScreen'}),
+            state
+        );
+        break;
     default:
       nextState = AppNavigator.router.getStateForAction(action, state);
       break;
@@ -41,16 +47,19 @@ let initNews = {
     items: [],
     isFetching: false,
     pageCount: 0,
+    isErr: false
 }
+
+/**
+ * 
+ * @param {state} 新闻信息 
+ * @param {action} action状态 
+ */
 function newsData(state = initNews,action) {
     switch(action.type) {
         case TYPES.FETCH_REQUEST:
             return Object.assign({},state,{
                 isFetching: true
-            });
-        case TYPES.FETCH_FAILURE:
-            return Object.assign({},state,{
-                isFetching: false
             });
         case TYPES.FETCH_RECEIVE:
             return Object.assign({},state,{
@@ -58,6 +67,11 @@ function newsData(state = initNews,action) {
                 isFetching: false,
                 pageCount: action.data.total
             });
+        case TYPES.FETCH_ERR:
+            return Object.assign({},state,{
+                isFetching: false,
+                isErr: true
+            })
         default:
             return state;
     }
@@ -66,9 +80,9 @@ function newsData(state = initNews,action) {
 const initialAuthState = { isLoggedIn: false };
 function logined(state = initialAuthState, action) {
   switch (action.type) {
-    case 'Login':
+    case TYPES.LOGIN:
       return { ...state, isLoggedIn: true };
-    case 'Logout':
+    case TYPES.LOGINOUT:
       return { ...state, isLoggedIn: false };
     default:
       return state;

@@ -17,6 +17,7 @@ import NewsList from './subpages/NewsList';
 
 export default class Home extends Component {
     static navigationOptions = ({ navigation }) => ({
+        headerTitle: '新闻',
         tabBarLabel: '新闻',
         tabBarIcon: ({ tintColor, focused }) => (
             <Icons name={focused ? 'ios-globe' : 'ios-globe-outline'} color={tintColor} size={28} />
@@ -32,7 +33,7 @@ export default class Home extends Component {
         return (
             <View style={commonStyle.container}>
                 <StatusBar animated={true} barStyle="light-content" />
-                <Header title="行业新闻" style={styles.header} />
+                {/*<Header title="行业新闻" style={styles.header} />*/}
                 <NewsList/>
             </View>
         );

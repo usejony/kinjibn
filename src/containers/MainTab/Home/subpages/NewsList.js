@@ -4,6 +4,7 @@ import {
     Text,
     FlatList,
     ListView,
+    ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -14,63 +15,75 @@ import NewsItem from '../../../../components/NewsItem';
 import Separator from '../../../../components/Separator';
 import newsItem from '../../../../components/NewsItem';
 import Activity from '../../../../components/Activity';
+import config from '../../../../utils/fetchConfig';
 
 class NewsList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            newsData: [],
-            isFetching: false,
-            pageCount: 0,
-            dataSource: new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 !== row2
-            })
+            hasMore: false
         };
     }
 
+    /**
+     * 下拉刷新
+     */
+    _onRefresh = () => {
+        this.props.getData();
+    }
 
-    // keyExtractor = (item, index) => item.id;
-    renderRow = (data) => (
-        <Text>{data.title}</Text>
-    );
-    _onListRefresh = (end) => {
-        setTimeout(() => {
-            if (!this.props.isFetching) {
-                this.setState({
-                    newsData: this.state.newsData.concat(this.props.newsData)
-                });
-                end();
+    /**
+     * 底部
+     */
+    _renderFooter = () => (
+        <View>
+            {
+                this.state.hasMore
+                    ? <ActivityIndicator />
+                    : <Text>没有更多了</Text>
             }
+        </View>
+    )
+
+    /**
+     * 上拉加载
+     */
+    loadMore = () => {
+        this.setState({
+            hasMore: true
+        })
+        setTimeout(() => {
+            this.setState({
+                hasMore: false
+            })
         }, 2000);
     }
 
-    //上拉加载的函数
-    onLoadMore(end) {
-
-    }
-    renderRow = (data) => (
-        <Text>{data}</Text>
-    )
     render() {
+        const data = this.props.items;
         return (
             <View style={styles.container}>
-                <SwRefreshListView
-                    ref='listRefresh'
-                    dataSource={this.state.dataSource.cloneWithRows(this.state.newsData)}
-                    renderRow={newsItem}
-                    onRefresh={this._onListRefresh}
-                    isShowLoadMore={false}
-                />
+                {
+                    data.length
+                        ? <FlatList
+                            refreshing={this.props.isFetching}
+                            ItemSeparatorComponent={Separator}
+                            data={data}
+                            renderItem={newsItem}
+                            ListFooterComponent={this.state.hasMore ? <View><ActivityIndicator/></View> : <Text>没有更多了</Text>}
+                            keyExtractor={(item) => item.id}
+                            onEndReached={this.loadMore}
+                            onEndReachedThreshold={0.1}
+                            onRefresh={this._onRefresh}
+                        />
+                        : <Activity />
+                }
             </View>
         );
     }
     componentDidMount() {
-        // this.refs.listRefresh.beginRefresh()
-        this.setState({
-            newsData: this.props.newsData,
-            isFetching: this.props.isFetching,
-            pageCount: this.props.pageCount,
-        })
+        const url = config.api.base + config.api.newsList;
+        this.props.getData();
     }
 }
 const styles = EStyleSheet.create({
@@ -82,14 +95,15 @@ const styles = EStyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        newsData: state.newsData.items,
+        items: state.newsData.items,
         isFetching: state.newsData.isFetching,
         pageCount: state.newsData.pageCount,
+        isErr: state.newsData.isErr,
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        getData: () => dispatch(fetchIfNeeded("http://rap.taobao.org/mockjs/16148/api/newsList")),
+        getData: () => dispatch(fetchIfNeeded(url,params)),
     }
 }
 

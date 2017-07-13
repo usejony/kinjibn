@@ -6,6 +6,10 @@ const commonStyle = EStyleSheet.create({
         flex: 1,
         backgroundColor: '$themeBg',
     },
+    center: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     loginBtn: {
         backgroundColor: '$themeColor',
         width: '60%',

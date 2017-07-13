@@ -9,7 +9,7 @@ import { StackNavigator } from 'react-navigation';
 
 import Login from './Login';
 import Register from './Register';
-import IconBtn from '../../components/iconBtn';
+import IconBtn from '../../components/IconBtn';
 import closeKeyboard from '../../utils/closeKeyboard';
 
 const LoginNav = StackNavigator({

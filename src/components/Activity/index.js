@@ -10,7 +10,7 @@ import Spinkit from 'react-native-spinkit';
      render() {
          return (
              <View style={styles.container}>
-                 <Spinkit type="Circle" color="#3fd47f" size={25}/>
+                 <Spinkit type="Wave" color="#3fd47f" size={30}/>
              </View>
          );
      }

@@ -13,7 +13,7 @@ import store from './store'
 
 EStyleSheet.build({
     $themeColor: '#3fd47f',
-    $themeBg: '#e6e8e7'
+    $themeBg: '#f9f9f9'
 });
 
 class Root extends React.Component {

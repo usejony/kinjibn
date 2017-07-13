@@ -4,20 +4,23 @@ import {
     Text,
     TextInput,
     Button,
-    PixelRatio
+    PixelRatio,
+    StatusBar,
 } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import CustomBtn from '../../../components/customBtn';
 import commonStyle from '../../../common/commonStyle';
-import IconBtn from '../../../components/iconBtn'
+import IconBtn from '../../../components/IconBtn'
+import closeKeyboard from '../../../utils/closeKeyboard';
 
 export default class Login extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: '登录',
         headerLeft: (
             <IconBtn name="ios-close-outline" color="#3fd47f" onPress={() => {
-                navigation.goBack();
+                closeKeyboard();
+                navigation.goBack(null);
             }}/>
         ),
         headerRight: (
@@ -72,6 +75,7 @@ export default class Login extends Component {
     render() {
         return (
             <View style={commonStyle.container}>
+                <StatusBar animated={true} barStyle="default"/>
                 <View style={styles.box}>
                     <TextInput
                         style={styles.input}

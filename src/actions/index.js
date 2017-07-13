@@ -6,7 +6,47 @@ import Mock from 'mockjs';
 import TYPES from '../constants/index';
 import { GET, POST } from '../utils/request';
 
+/**
+ * 呼出登录页面
+ */
 
+export function toLogin() {
+    return {
+        type: TYPES.TO_LOGIN
+    }
+}
+
+/**
+ * 去到新闻详情页面
+ */
+export function toNewsTab(index) {
+    return {
+        type: TYPES.TO_NEWS_TAB,
+        index
+    }
+}
+
+/**
+ * 去到新闻详情页面 
+ */
+export function toNewsDetail() {
+    return {
+        type: TYPES.TO_NEWS_DETAIL
+    }
+}
+
+/**
+ * 去到评论页面
+ */
+export function toComment() {
+    return {
+        type: TYPES.TO_COMMENT
+    }
+}
+
+/**
+ * 登录
+ */
 export function login() {
     return {
         type: TYPES.LOGIN
@@ -34,7 +74,6 @@ function goNewsDetail(data) {
  * @param {data} 请求成功后获得的数据 
  */
 function fetchSuccess(data) {
-    console.log(data)
     return {
         type: TYPES.FETCH_RECEIVE,
         data
@@ -50,18 +89,19 @@ function fetchErr() {
         type: TYPES.FETCH_ERR
     }
 }
+
 /**
  * 
  * @param {url} 请求地址 
  */
-function fetchPosts(url,params) {
+function fetchPosts(url, params) {
     return dispatch => {
         dispatch(fetchRequest());
-        return GET(url,params).then(
+        return GET(url, params).then(
             data => dispatch(fetchSuccess(data))
         ).catch(
             e => dispatch(fetchErr())
-        );
+            );
     }
 }
 
@@ -71,7 +111,7 @@ function fetchPosts(url,params) {
  */
 function shouldFetch(state) {
     const items = state.newsData.isFetching;
-    if(items) {
+    if (items) {
         return false;
     }
     return true;
@@ -83,9 +123,9 @@ function shouldFetch(state) {
  * @param {params} 请求的参数（对象leixng）
  */
 export function fetchIfNeeded(url, params) {
-    return (dispatch,getState) => {
-        if(shouldFetch(getState())) {
-            return dispatch(fetchPosts(url,params));
+    return (dispatch, getState) => {
+        if (shouldFetch(getState())) {
+            return dispatch(fetchPosts(url, params));
         } else {
             return Promise.resolve();
         }

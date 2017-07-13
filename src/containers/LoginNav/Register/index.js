@@ -36,7 +36,6 @@ export default class Register extends Component {
                     <TextInput
                         style={styles.input}
                         value={this.state.phone}
-                        autoFocus={true}
                         keyboardType='numeric'
                         onChangeText={this.phoneChange}
                         placeholder='请输入您的手机号'

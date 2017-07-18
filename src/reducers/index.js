@@ -73,7 +73,8 @@ function nav(state, action) {
 }
 
 let initNews = {
-    items: {},
+    news: {},
+    item: [],
     isFetching: false,
     pageCount: 0,
     isErr: false
@@ -91,9 +92,9 @@ function newsData(state = initNews, action) {
                 isFetching: true
             });
         case TYPES.FETCH_RECEIVE:
-            return Object.assign({}, state, {
-                items: 
-                    Object.assign({},null,{du: '是否'}),
+            return Object.assign({}, state, { 
+                news: Object.assign({},state.news,{du: '超超'}),
+                items: action.data.data,
                 isFetching: false,
                 pageCount: action.data.total
             });
@@ -106,6 +107,8 @@ function newsData(state = initNews, action) {
             return state;
     }
 }
+
+function 
 
 const initialAuthState = { isLoggedIn: false };
 function logined(state = initialAuthState, action) {
